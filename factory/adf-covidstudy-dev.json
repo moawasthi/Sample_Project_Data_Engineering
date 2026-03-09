@@ -1,0 +1,9 @@
+{
+	"name": "adf-covidstudy-dev",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "13284217-05d2-4f3c-bab8-2f82de06e802",
+		"tenantId": "d4b3ee6c-57d2-4a98-9614-17c24476d63b"
+	}
+}

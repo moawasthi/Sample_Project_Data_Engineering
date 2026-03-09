@@ -1,0 +1,25 @@
+{
+	"name": "ds_adls_cases_death",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_dl_population_by_age",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "cases_deaths.csv",
+				"folderPath": "cases_deaths",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
