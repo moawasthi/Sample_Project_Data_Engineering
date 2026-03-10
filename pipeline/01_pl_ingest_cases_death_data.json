@@ -1,5 +1,5 @@
 {
-	"name": "02_pl_ingest_cases_death_data",
+	"name": "01_pl_ingest_cases_death_data",
 	"properties": {
 		"activities": [
 			{
