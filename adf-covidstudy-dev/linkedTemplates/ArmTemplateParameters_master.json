@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-covidstudy-dev"
+		},
+		"ls_adls_connection_accountKey": {
+			"value": ""
+		},
+		"ls_adls_dl_population_by_age_accountKey": {
+			"value": ""
+		},
+		"ls_adls_sa_population_by_age_gzip_connectionString": {
+			"value": ""
+		},
+		"ls_adls_connection_properties_typeProperties_url": {
+			"value": "https://dlcovidstudydev.dfs.core.windows.net/"
+		},
+		"ls_adls_dl_population_by_age_properties_typeProperties_url": {
+			"value": "https://dlcovidstudydev.dfs.core.windows.net/"
+		},
+		"ls_http_github_properties_typeProperties_url": {
+			"value": "@{linkedService().sourceBaseURL}"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
