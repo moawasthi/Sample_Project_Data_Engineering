@@ -1,5 +1,5 @@
 {
-	"name": "pl_ecdc_metadata_driven_ingestion",
+	"name": "04_pl_ecdc_metadata_driven_ingestion",
 	"properties": {
 		"activities": [
 			{
