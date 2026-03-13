@@ -13,7 +13,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "filteronlyEurope"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          country as string,",
@@ -28,7 +32,8 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> casesanddeaths"
+				"     ignoreNoFilesFound: false) ~> casesanddeaths",
+				"casesanddeaths filter(continent == 'Europe') ~> filteronlyEurope"
 			]
 		}
 	}
