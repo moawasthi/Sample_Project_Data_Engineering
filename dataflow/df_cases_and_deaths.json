@@ -12,10 +12,21 @@
 					"name": "casesanddeaths"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_sink_cases_and_deaths",
+						"type": "DatasetReference"
+					},
+					"name": "casesdeaths"
+				}
+			],
 			"transformations": [
 				{
 					"name": "filteronlyEurope"
+				},
+				{
+					"name": "casesanddeathscolumns"
 				}
 			],
 			"scriptLines": [
@@ -23,17 +34,33 @@
 				"          country as string,",
 				"          country_code as string,",
 				"          continent as string,",
-				"          population as string,",
+				"          population as integer,",
 				"          indicator as string,",
-				"          daily_count as string,",
-				"          date as string,",
-				"          rate_14_day as string,",
+				"          daily_count as short,",
+				"          date as date,",
+				"          rate_14_day as double,",
 				"          source as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     limit: 1100,",
 				"     ignoreNoFilesFound: false) ~> casesanddeaths",
-				"casesanddeaths filter(continent == 'Europe') ~> filteronlyEurope"
+				"casesanddeaths filter(continent == 'Europe') ~> filteronlyEurope",
+				"filteronlyEurope pivot(groupBy(country,",
+				"          population,",
+				"          source,",
+				"          date),",
+				"     pivotBy(indicator),",
+				"     sumdailycount = sum(daily_count),",
+				"     columnNaming: '$N$V',",
+				"     lateral: false) ~> casesanddeathscolumns",
+				"casesanddeathscolumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> casesdeaths"
 			]
 		}
 	}
