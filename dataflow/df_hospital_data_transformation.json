@@ -45,6 +45,15 @@
 				},
 				{
 					"name": "minmaxdatecomputation"
+				},
+				{
+					"name": "jointohospitadata"
+				},
+				{
+					"name": "pivotbasedonindicator"
+				},
+				{
+					"name": "pivotbasedonindicatordaily"
 				}
 			],
 			"scriptLines": [
@@ -119,7 +128,32 @@
 				"readdimdate derive(ecdc_year_week = year +  '-w' + lpad(week_of_month, 2, '0')) ~> addyearweekkey",
 				"addyearweekkey aggregate(groupBy(ecdc_year_week),",
 				"     start_week_date = min(date),",
-				"          end_week_date = max(date)) ~> minmaxdatecomputation"
+				"          end_week_date = max(date)) ~> minmaxdatecomputation",
+				"splitbasedonindicator@Weekly, minmaxdatecomputation join(reported_year_week == ecdc_year_week,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> jointohospitadata",
+				"splitbasedonindicator@Daily pivot(groupBy(country,",
+				"          country_code_2_digit,",
+				"          country_code_3_digit,",
+				"          population,",
+				"          reported_date),",
+				"     pivotBy(indicator),",
+				"     {} = sum(value),",
+				"     columnNaming: '$N$V_count',",
+				"     lateral: true) ~> pivotbasedonindicator",
+				"jointohospitadata pivot(groupBy(country,",
+				"          country_code_2_digit,",
+				"          country_code_3_digit,",
+				"          population,",
+				"          reported_year_week,",
+				"          start_week_date,",
+				"          end_week_date),",
+				"     pivotBy(indicator),",
+				"     {} = sum(value),",
+				"     columnNaming: '$N$V_count',",
+				"     lateral: true) ~> pivotbasedonindicatordaily"
 			]
 		}
 	}
