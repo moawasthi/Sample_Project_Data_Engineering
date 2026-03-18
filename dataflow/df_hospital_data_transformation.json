@@ -42,6 +42,9 @@
 				},
 				{
 					"name": "addyearweekkey"
+				},
+				{
+					"name": "minmaxdatecomputation"
 				}
 			],
 			"scriptLines": [
@@ -113,7 +116,10 @@
 				"     skipDuplicateMapOutputs: true) ~> cleanupafterlookup",
 				"cleanupafterlookup split(indicator == 'Weekly new hospital admissions per 100k' || indicator == 'Weekly new ICU admissions per 100k',",
 				"     disjoint: false) ~> splitbasedonindicator@(Weekly, Daily)",
-				"readdimdate derive(ecdc_year_week = year +  '-w' + lpad(week_of_month, 2, '0')) ~> addyearweekkey"
+				"readdimdate derive(ecdc_year_week = year +  '-w' + lpad(week_of_month, 2, '0')) ~> addyearweekkey",
+				"addyearweekkey aggregate(groupBy(ecdc_year_week),",
+				"     start_week_date = min(date),",
+				"          end_week_date = max(date)) ~> minmaxdatecomputation"
 			]
 		}
 	}
