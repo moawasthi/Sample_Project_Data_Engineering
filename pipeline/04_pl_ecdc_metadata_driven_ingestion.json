@@ -36,8 +36,6 @@
 			{
 				"name": "Loop and load files",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Get Config File",
